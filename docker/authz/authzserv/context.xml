@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/rest">
+  <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" maxActive="8" maxIdle="4" name="jdbc/authzDB" password="${DB_PASSWORD}" type="javax.sql.DataSource" url="jdbc:mysql://${DB_SERVICE}:${DB_PORT}/${DB_DATABASE}?allowMultiQueries=true" username="${DB_USERNAME}" autoReconnect="true" testOnBorrow="true" testOnReturn="true" testWhileIdle="true" allowMultiQueries="true" validationQuery="SELECT 1" validationInterval="6000"/>
+  <ResourceLink global="jdbc/authzDB" name="jdbc/authzDB" type="javax.sql.DataSource"/>
+</Context>
+

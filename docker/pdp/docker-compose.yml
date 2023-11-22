@@ -1,0 +1,37 @@
+version: '3'
+services:
+  pdpdb:
+    container_name: as_authzpdpdb
+    build: ./authzpdpdb/.
+    restart: always
+    ports:
+      - 3307:3306
+    volumes:
+     - ./vol/dbpdp/datadir:/var/lib/mysql
+#     - ./vol/authzdb/config:/etc/mysql/conf.d/     
+  pdp:
+    container_name: as_authzpdp
+    build: ./authzpdp/.
+    depends_on:
+      - pdpdb
+    ports:
+      - 9001:8080/tcp
+    volumes:
+#     - ./vol/pdp/webapps:/usr/local/tomcat/webapps/
+     - ./vol/pdp/logs:/usr/local/tomcat/logs/
+     - ./vol/pdp/authzserv/:/authzserv/
+    links:
+     - pdpdb:authzpdpdb     
+    environment:
+      - AUTHZSERVER_INSTANCE_TYPE=PDP
+      - MQTT_TOPIC=datalake/authz
+      - MQTT_QOS=0
+      - MQTT_BROKER=tcp://mqttserver:1883
+      - MQTT_CLIENTID=authz01
+      - MQTT_USERNAME=admin
+      - MQTT_PASSWORD=mqtt_pass
+      - ELASTIC_SERVER=https://myelasticserver
+      - ELASTIC_PORT=9200
+      - ELASTIC_INDEX=authzserver
+      - ELASTIC_SERVER_USER=username
+      - ELASTIC_SERVER_PASS=password

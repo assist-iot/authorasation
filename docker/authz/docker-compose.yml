@@ -1,0 +1,43 @@
+version: '3'
+services:
+  database:
+    container_name: as_authzdb
+    build: ./authzdb/.
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+     - ./vol/authzdb/datadir:/var/lib/mysql
+#     - ./vol/authzdb/config:/etc/mysql/conf.d
+  web:
+    container_name: as_authzweb
+    build: ./authzserv/.
+    depends_on:
+      - database
+    ports:
+      - 9000:8080/tcp
+    volumes:
+#     - ./vol/authz/webapps:/usr/local/tomcat/webapps/
+     - ./vol/authz/logs:/usr/local/tomcat/logs/
+     - ./vol/authz/authzserv/:/authzserv/
+    links:
+     - database:authzdb
+    environment:
+      - AUTHZSERVER_INSTANCE_TYPE=SERVER
+      - MQTT_TOPIC=datalake/authz
+      - MQTT_QOS=0
+      - MQTT_BROKER=tcp://mqttserver:1883
+      - MQTT_CLIENTID=authz01
+      - MQTT_USERNAME=admin
+      - MQTT_PASSWORD=mqtt_pass
+      - ELASTIC_SERVER=https://myelasticserver
+      - ELASTIC_PORT=9200
+      - ELASTIC_INDEX=authzserver
+      - ELASTIC_SERVER_USER=username
+      - ELASTIC_SERVER_PASS=password
+#      - DB_SERVICE=database
+#      - DB_USERNAME=root
+#      - DB_PASSWORD=S21sec
+#      - DB_PORT=3306
+#      - DB_DATABASE=authzDB
+      - JAVA_OPTS=-DDB_PASSWORD=S21sec -DDB_USERNAME=root -DDB_SERVICE=database -DDB_PORT=3306 -DDB_DATABASE=authzDB
