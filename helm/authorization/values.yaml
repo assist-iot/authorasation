@@ -9,14 +9,14 @@ fullnameOverride: ""
 # Deploy all the components in the same node
 enablerNodeSelector: {}
 
-imagePullSecrets: 
-  - name: authorization-repo-credentials
+#imagePullSecrets: 
+#  - name: authorization-repo-credentials
 
 # Component authzweb values
 authzweb:
   tier: external
   image:
-    repository: gitlab.assist-iot.eu:5050/wp5/t53/authorization/authz/authzserv
+    repository: assistiot/authorization_svr
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
@@ -80,7 +80,7 @@ authzweb:
 authzdatabase:
   tier: internal
   image:
-    repository: gitlab.assist-iot.eu:5050/wp5/t53/authorization/authz/authzdb
+    repository: assistiot/authorization_db
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
