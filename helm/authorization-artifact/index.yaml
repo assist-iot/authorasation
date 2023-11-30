@@ -3,12 +3,12 @@ entries:
   authorization:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2023-11-22T15:34:04.543016746+01:00"
+    created: "2023-11-30T10:28:53.654964436+01:00"
     description: Authorization enabler
-    digest: 5f3f93ed0332ece9642a03d1da16d71d563f127396b37cfaa006d61b737c31c5
+    digest: acb13b1acdc8ab53762ce9a1b58db298ab1459115776d77524decb26e2037c03
     name: authorization
     type: application
     urls:
     - authorization-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-22T15:34:04.542099988+01:00"
+generated: "2023-11-30T10:28:53.653192476+01:00"
